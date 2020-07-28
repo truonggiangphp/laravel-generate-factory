@@ -48,7 +48,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 Require this package with composer using the following command:
 
 ```bash
-composer require --dev mpociot/laravel-test-factory-helper
+composer require --dev webikevn/laravel-generate-factory
 ```
 
 ### Usage
