@@ -1,24 +1,30 @@
 {
     "name": "webikevn/laravel-generate-factory",
-    "description": "Generate Laravel test factories from your existing models",
-    "keywords": ["Laravel", "Tests", "Factory"],
     "license": "MIT",
-    "require": {
-        "php": "^7.2.5",
-        "illuminate/support": "^6.0|^7.0",
-        "illuminate/console": "^6.0|^7.0",
-        "illuminate/filesystem": "^6.0|^7.0",
-        "doctrine/dbal": "^2.9"
-    },
+    "authors": [
+        {
+            "name": "Nguyen Truong Giang",
+            "email": "nguyen.giang@rivercrane.vn"
+        }
+    ],
     "autoload": {
         "psr-4": {
-            "Webike\\LaravelTestFactoryHelper\\": "src/"
+            "Aiiro\\Factory\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webike\\Factory\\Tests\\": "tests/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "orchestra/testbench": "~3.6"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webike\\LaravelTestFactoryHelper\\TestFactoryHelperServiceProvider"
+                "Webike\\Factory\\FactoryGeneratorServiceProvider"
             ]
         }
     }

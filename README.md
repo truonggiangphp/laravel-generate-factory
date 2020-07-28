@@ -1,72 +1,65 @@
-## Laravel Test Factory Generator
+<h1 align="center">Generate Laravel Factory Templates</h1>
 
-`php artisan generate:model-factory`
+Make Laravel factory file with the column names of a table in a database.
 
-This package will generate [factories](https://laravel.com/docs/master/database-testing#writing-factories) from your existing models so you can get started with testing your Laravel application more quickly.
+![screenshot](https://raw.githubusercontent.com/aiiro/laravel-factory-generator/master/screenshot.png)
 
-### Example output
-
-#### Migration and Model
-```php
-Schema::create('users', function (Blueprint $table) {
-    $table->increments('id');
-    $table->string('name');
-    $table->string('username');
-    $table->string('email')->unique();
-    $table->string('password', 60);
-    $table->integer('company_id');
-    $table->rememberToken();
-    $table->timestamps();
-});
-
-class User extends Model {
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
-}
+### Installing
+``` shell
+composer require --dev aiiro/laravel-factory-generator
 ```
 
-#### Factory Result
+If you are using Laravel 5.5 or higher, the package will be automatically registered.
 
-```php
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->name,
-        'username' => $faker->userName,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt($faker->password),
-        'company_id' => factory(App\Company::class),
-        'remember_token' => Str::random(10),
-    ];
-});
+### Configuration
+Optionally, you can publish the config file by running this command.
+``` shell
+php artisan vendor:publish --provider="Aiiro\Factory\FactoryGeneratorServiceProvider"
 ```
+And then, you can find `config\factory-generator.php`.
+``` php
+<?php
 
+return [
+    
+    /**
+     * Set the namespace of the model.
+     */
+    'namespace' => [
+        'model' => 'App',
+    ],
 
-### Install
-
-Require this package with composer using the following command:
-
-```bash
-composer require --dev webikevn/laravel-generate-factory
+    /**
+     * List of the columns that will not appear in the factory.
+     */
+    'ignored_columns' => [
+        'id',
+    ],
+];
 ```
 
 ### Usage
+After installing and Configuration, you can generate the factory file by running the following command.
 
-To generate multiple factories at once, run the artisan command:
+Please pass the table name to `generate:factory` command as the argument.
 
-`php artisan generate:model-factory`
+``` shell
+php artisan generate:factory some_samples
+```
 
-This command will find all models within your application and create test factories. By default, this will not overwrite any existing model factories. You can _force_ overwriting existing model factories by using the `--force` option.
+**NOTE**
+This command connects to the database to retrieve the columns from table, so make sure that the database is configured.
 
-To generate a factory for specific model or models, run the artisan command:
+#### To generate factories of all tables in database.
 
-`php artisan generate:model-factory User Team`
+Use `--all` option without table name, to generate factories of all tables in database.
 
-By default, this command will search under the `app` folder for models. If your models are within a different folder, for example `app/Models`, you can specify this using `--dir` option. In this case, run the artisan command:
+If a factory of table exists, it will be skipped and continue to generate factories of other tables.
 
-`php artisan generate:model-factory --dir app/Models -- User Team`
+```bash
+php artisan generate:factory  --all
+```
 
-### License
-
-The Laravel Test Factory Helper is free software licensed under the MIT license.
+## License
+This project is released under MIT License. See [MIT License](LICENSE)
+ for the detail.
