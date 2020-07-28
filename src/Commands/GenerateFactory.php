@@ -25,7 +25,7 @@ class GenerateFactory extends GeneratorCommand
     /**
      * @var string
      */
-    protected $signature = 'generate:factory {name?} {--all}';
+    protected $signature = 'generate:factory {name?} {--all} {connection?}';
 
     /**
      * @var \Illuminate\Config\Repository
@@ -55,7 +55,7 @@ class GenerateFactory extends GeneratorCommand
      */
     public function handle()
     {
-        $connection = $this->option('connection');
+        $connection = $this->argument('connection');
         /** @var Connection $conn */
         $conn = \DB::connection($connection);
         /** @var \PDO $pdo */
@@ -186,16 +186,16 @@ class GenerateFactory extends GeneratorCommand
     {
         $content = '';
 
-        $ignoredColumns = $this->config->get('factory-generator.ignored_columns');
+        $ignoredColumns = $this->config->get('factory-generator.ignored_columns', []);
 
         foreach ($columns as $column) {
-            if (in_array($column, $ignoredColumns)) {
+            if (in_array($column['field'], $ignoredColumns)) {
                 continue;
             }
 
             // indent spaces
             $content .= "        ";
-            $content .= "'{$column}' => null,";
+            $content .= "'{$column['field']}' => {$this->buildValueFactory($column['type'])},";
             $content .= "\n";
         }
 
@@ -205,5 +205,28 @@ class GenerateFactory extends GeneratorCommand
         }
 
         return str_replace('DummyColumns', $content, $stub);
+    }
+
+    /**
+     * @param $type
+     * @return string
+     */
+    private function buildValueFactory($type)
+    {
+        $type = explode(' ', $type);
+        $type = explode('(', $type[0]);
+        switch ($type[0]) {
+            case 'char':
+            case 'text':
+            case 'varchar':
+                return '$faker->word';
+            case 'int':
+            case 'bigint':
+            case 'tinyint':
+                return '$faker->numberBetween(0, 10)';
+            case 'datetime':
+                return '\Illuminate\Support\Carbon::now()';
+                break;
+        }
     }
 }
