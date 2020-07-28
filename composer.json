@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Aiiro\\Factory\\": "src/"
+            "Webike\\Factory\\": "src/"
         }
     },
     "autoload-dev": {

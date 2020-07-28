@@ -51,7 +51,7 @@ class GenerateFactory extends GeneratorCommand
 
     /**
      * @return bool|null|void
-     * @throws \Aiiro\Factory\Exceptions\UnknownConnectionException
+     * @throws \Webike\Factory\Exceptions\UnknownConnectionException
      */
     public function handle()
     {
