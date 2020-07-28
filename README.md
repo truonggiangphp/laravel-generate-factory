@@ -2,11 +2,11 @@
 
 Make Laravel factory file with the column names of a table in a database.
 
-![screenshot](https://raw.githubusercontent.com/aiiro/laravel-factory-generator/master/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/webikevn/laravel-generate-factory/master/screenshot.png)
 
 ### Installing
 ``` shell
-composer require --dev aiiro/laravel-factory-generator
+composer require --dev webikevn/laravel-generate-factory
 ```
 
 If you are using Laravel 5.5 or higher, the package will be automatically registered.
@@ -14,7 +14,7 @@ If you are using Laravel 5.5 or higher, the package will be automatically regist
 ### Configuration
 Optionally, you can publish the config file by running this command.
 ``` shell
-php artisan vendor:publish --provider="Aiiro\Factory\FactoryGeneratorServiceProvider"
+php artisan vendor:publish --provider="Webike\Factory\FactoryGeneratorServiceProvider"
 ```
 And then, you can find `config\factory-generator.php`.
 ``` php
