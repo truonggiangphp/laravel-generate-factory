@@ -37,7 +37,10 @@ class MySql implements DatabaseContract
         $stmt->execute();
 
         foreach ($stmt->fetchAll() as $column) {
-            $columns[] = $column['Field'];
+            $columns[] = array(
+                'field'=> $column['Field'],
+                'type'=> $column['Type']
+            );
         }
 
         return $columns;
